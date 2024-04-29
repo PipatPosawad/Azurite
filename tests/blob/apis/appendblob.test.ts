@@ -541,7 +541,7 @@ describe("AppendBlobAPIs", () => {
   it("Append block lease condition should work @loki", async () => {
     await appendBlobClient.create();
 
-    const leaseId = "abcdefg";
+    const leaseId = "07f7f166-b72d-4fa3-b984-0953e427ef5c";
     const blobLeaseClient = await appendBlobClient.getBlobLeaseClient(leaseId);
     await blobLeaseClient.acquireLease(20);
 

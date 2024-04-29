@@ -8594,7 +8594,7 @@ export type BlobAcquireLeaseResponse = BlobAcquireLeaseHeaders & {
   /**
    * The response status code.
    */
-  statusCode: 201;
+  statusCode: 201 | 400;
 };
 
 /**
@@ -8624,7 +8624,7 @@ export type BlobChangeLeaseResponse = BlobChangeLeaseHeaders & {
   /**
    * The response status code.
    */
-  statusCode: 200;
+  statusCode: 200 | 400;
 };
 
 /**

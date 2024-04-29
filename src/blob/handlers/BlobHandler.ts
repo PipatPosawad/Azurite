@@ -34,6 +34,8 @@ import {
 import BaseHandler from "./BaseHandler";
 import IPageBlobRangesManager from "./IPageBlobRangesManager";
 
+import { validate as uuidValidate } from 'uuid';
+
 /**
  * BlobHandler handles Azure Storage Blob related requests.
  *
@@ -388,6 +390,19 @@ export default class BlobHandler extends BaseHandler implements IBlobHandler {
       );
     }
 
+    if (options.proposedLeaseId && !uuidValidate(options.proposedLeaseId))
+    {
+      const invalidRequestResponse: Models.BlobAcquireLeaseResponse = {
+        date: blobCtx.startTime!,
+        leaseId: options.proposedLeaseId,
+        requestId: context.contextId,
+        version: BLOB_API_VERSION,
+        statusCode: 400,
+        clientRequestId: options.requestId
+      };
+      return invalidRequestResponse;
+    }
+
     const res = await this.metadataStore.acquireBlobLease(
       context,
       account,
@@ -513,6 +528,20 @@ export default class BlobHandler extends BaseHandler implements IBlobHandler {
     const account = blobCtx.account!;
     const container = blobCtx.container!;
     const blob = blobCtx.blob!;
+
+    if (proposedLeaseId && !uuidValidate(proposedLeaseId))
+    {
+      const invalidRequestResponse: Models.BlobChangeLeaseResponse = {
+        date: blobCtx.startTime!,
+        leaseId: proposedLeaseId,
+        requestId: context.contextId,
+        version: BLOB_API_VERSION,
+        statusCode: 400,
+        clientRequestId: options.requestId
+      };
+      return invalidRequestResponse;
+    }
+
     const res = await this.metadataStore.changeBlobLease(
       context,
       account,

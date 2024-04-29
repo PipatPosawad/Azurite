@@ -497,7 +497,7 @@ describe("BlobAPIs", () => {
   });
 
   it("acquireLease_available_proposedLeaseId_fixed @loki @sql", async () => {
-    const guid = "ca761232ed4211cebacd00aa0057b223";
+    const guid = "07f7f166-b72d-4fa3-b984-0953e427ef5c";
     const duration = 30;
     blobLeaseClient = await blobClient.getBlobLeaseClient(guid);
     const result_acquire = await blobLeaseClient.acquireLease(duration);
@@ -536,7 +536,7 @@ describe("BlobAPIs", () => {
   });
 
   it("releaseLease @loki @sql", async () => {
-    const guid = "ca761232ed4211cebacd00aa0057b223";
+    const guid = "07f7f166-b72d-4fa3-b984-0953e427ef5c";
     const duration = -1;
     blobLeaseClient = await blobClient.getBlobLeaseClient(guid);
     await blobLeaseClient.acquireLease(duration);
@@ -554,7 +554,7 @@ describe("BlobAPIs", () => {
   });
 
   it("renewLease @loki @sql", async () => {
-    const guid = "ca761232ed4211cebacd00aa0057b223";
+    const guid = "07f7f166-b72d-4fa3-b984-0953e427ef5c";
     const duration = 15;
     blobLeaseClient = await blobClient.getBlobLeaseClient(guid);
     await blobLeaseClient.acquireLease(duration);
@@ -581,7 +581,7 @@ describe("BlobAPIs", () => {
   });
 
   it("changeLease @loki @sql", async () => {
-    const guid = "ca761232ed4211cebacd00aa0057b223";
+    const guid = "07f7f166-b72d-4fa3-b984-0953e427ef5c";
     const duration = 15;
     blobLeaseClient = blobClient.getBlobLeaseClient(guid);
     await blobLeaseClient.acquireLease(duration);
@@ -591,7 +591,7 @@ describe("BlobAPIs", () => {
     assert.equal(result.leaseState, "leased");
     assert.equal(result.leaseStatus, "locked");
 
-    const newGuid = "3c7e72ebb4304526bc53d8ecef03798f";
+    const newGuid = "965a1d32-d061-4a1f-bbf8-f9d9355a6e7a";
     const result_change = await blobLeaseClient.changeLease(newGuid);
     assert.equal(
       result_change._response.request.headers.get("x-ms-client-request-id"),
@@ -603,7 +603,7 @@ describe("BlobAPIs", () => {
   });
 
   it("breakLease @loki @sql", async () => {
-    const guid = "ca761232ed4211cebacd00aa0057b223";
+    const guid = "07f7f166-b72d-4fa3-b984-0953e427ef5c";
     const duration = 15;
     blobLeaseClient = blobClient.getBlobLeaseClient(guid);
     await blobLeaseClient.acquireLease(duration);
@@ -1844,7 +1844,7 @@ describe("BlobAPIs", () => {
   });
   
   it("Set and get blob tags should work with lease condition @loki @sql", async () => {    
-    const guid = "ca761232ed4211cebacd00aa0057b223";
+    const guid = "07f7f166-b72d-4fa3-b984-0953e427ef5c";
     const leaseClient = blockBlobClient.getBlobLeaseClient(guid);
     await leaseClient.acquireLease(-1);
 
@@ -1871,7 +1871,7 @@ describe("BlobAPIs", () => {
     }
 
     try {
-      const newGuid = "3c7e72ebb4304526bc53d8ecef03798f";
+      const newGuid = "965a1d32-d061-4a1f-bbf8-f9d9355a6e7a";
       await blockBlobClient.getTags({ conditions: { leaseId: newGuid } });
       assert.fail(
         "Should have failed when setting tags without the right lease condition of a leased blob"
